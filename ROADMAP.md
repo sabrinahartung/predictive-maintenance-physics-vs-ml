@@ -70,12 +70,15 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M2 — Baseline models (`02_baseline_models.ipynb` + `src/pdm`)
 
-- [ ] `evaluate.py`: stratified 5-fold CV, out-of-fold probabilities, PR-AUC, ROC-AUC, F1 at best threshold
-- [ ] Fix threshold bug: use `th[best_idx]` (guard `best_idx == len(th)`), not `th[best_idx - 1]`
-- [ ] `models.py`: LogReg, RandomForest, HistGradientBoosting pipelines on **raw** sensor features + type
-- [ ] Results table + PR curves for all models in one plot; save OOF results to `reports/`
+- [x] `evaluate.py`: stratified 5-fold CV, out-of-fold probabilities, PR-AUC, ROC-AUC, F1 at best threshold
+- [x] Fix threshold bug: use `th[best_idx]` (guard `best_idx == len(th)`), not `th[best_idx - 1]`
+- [x] `models.py`: LogReg, RandomForest, HistGradientBoosting pipelines on **raw** sensor features + type
+- [x] Results table + PR curves for all models in one plot; save OOF results to `reports/`
 
 **Done when:** notebook reproduces roughly PR-AUC ≈ 0.86 / F1 ≈ 0.81 for the best baseline, and all logic lives in `src/pdm`.
+
+> Result: raw-feature baseline is PR-AUC 0.835 / F1 0.78 (HistGradientBoosting). The original 0.858 included a
+> derived temperature-difference feature; adding it back reproduces 0.858 exactly (see notebook section 6).
 
 ## M3 — Explainability (`03_explainability.ipynb`)
 
