@@ -53,7 +53,7 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 - [x] Dependencies: `pandas numpy scikit-learn matplotlib seaborn shap joblib streamlit`; dev: `ruff pytest jupyterlab nbconvert`
 - [x] Move data to `data/raw/`, original notebook to `notebooks/archive/`
 - [x] `LICENSE` (MIT for code) and README stub with dataset citation
-- [ ] Create GitHub repo and push
+- [x] Create GitHub repo and push (private until M8)
 
 **Done when:** `uv sync && uv run python -c "import pdm, shap, sklearn"` works on a fresh clone.
 
