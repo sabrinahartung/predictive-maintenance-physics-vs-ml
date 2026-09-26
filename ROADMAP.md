@@ -59,12 +59,12 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M1 — Reproducible EDA (`01_eda.ipynb`)
 
-- [ ] Port the existing EDA to English; fix hidden state (`df` undefined → use `load_data()` from `src/pdm/data.py`)
-- [ ] Clean column names once in `data.py` (e.g. `air_temp_k`, `process_temp_k`, `rpm`, `torque_nm`, `tool_wear_min`)
-- [ ] Keep: variable table, range sanity check, class imbalance, failure-mode counts, correlation heatmap
-- [ ] Add: failure rate by machine type, feature distributions split by failure, failure mode × type table
-- [ ] Add: label consistency check (9 failures without a mode, 18 modes without failure)
-- [ ] Save key figures to `reports/figures/`
+- [x] Port the existing EDA to English; fix hidden state (`df` undefined → use `load_data()` from `src/pdm/data.py`)
+- [x] Clean column names once in `data.py` (e.g. `air_temp_k`, `process_temp_k`, `rpm`, `torque_nm`, `tool_wear_min`)
+- [x] Keep: variable table, range sanity check, class imbalance, failure-mode counts, correlation heatmap
+- [x] Add: failure rate by machine type, feature distributions split by failure, failure mode × type table
+- [x] Add: label consistency check (9 failures without a mode, 18 modes without failure)
+- [x] Save key figures to `reports/figures/`
 
 **Done when:** `uv run jupyter nbconvert --execute --to notebook notebooks/01_eda.ipynb` runs top to bottom without errors.
 
