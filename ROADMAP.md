@@ -82,9 +82,9 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M3 — Explainability (`03_explainability.ipynb`)
 
-- [ ] SHAP (TreeExplainer) on best baseline: summary/beeswarm plot, global importance
-- [ ] Dependence plots: torque × rpm, tool wear × torque, process temp − air temp × rpm
-- [ ] Write the hypotheses these plots suggest (power window, overstrain threshold, heat dissipation condition)
+- [x] SHAP (TreeExplainer) on best baseline: summary/beeswarm plot, global importance
+- [x] Dependence plots: torque × rpm, tool wear × torque, process temp − air temp × rpm
+- [x] Write the hypotheses these plots suggest (power window, overstrain threshold, heat dissipation condition)
 
 **Done when:** notebook ends with 3 explicit, testable hypotheses that lead into M4.
 
