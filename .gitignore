@@ -1,0 +1,20 @@
+# Environments
+.venv/
+__pycache__/
+*.pyc
+
+# Tooling
+.idea/
+.vscode/
+.ipynb_checkpoints/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# Build / artifacts
+dist/
+build/
+*.egg-info/
+models/
