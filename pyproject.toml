@@ -1,0 +1,42 @@
+[project]
+name = "pdm"
+version = "0.1.0"
+description = "Physics vs. black box: predictive maintenance on the AI4I 2020 dataset"
+readme = "README.md"
+authors = [{ name = "Sabrina Hartung" }]
+license = "MIT"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "joblib>=1.6.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+    "seaborn>=0.13.2",
+    "shap>=0.52.0",
+    "streamlit>=1.64.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.8,<0.13"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["notebooks/archive"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.4",
+    "nbconvert>=7.17.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+]
