@@ -1,0 +1,108 @@
+site_name: "Predictive Maintenance: Physics vs. Black Box"
+site_description: How a physics-informed hybrid beats black-box ML on the AI4I 2020 milling machine dataset, and how to read the demo app.
+site_author: Sabrina Hartung
+site_url: https://sabrinahartung.github.io/predictive-maintenance-physics-vs-ml/
+repo_url: https://github.com/sabrinahartung/predictive-maintenance-physics-vs-ml
+repo_name: predictive-maintenance-physics-vs-ml
+edit_uri: edit/main/docs/
+copyright: Code MIT · AI4I 2020 dataset CC BY 4.0 (Matzka, 2020)
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            heading_level: 2
+            filters: ["!^_"]
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      auto_append:
+        - docs/includes/links.md
+
+nav:
+  - Overview: index.md
+  - Using the app:
+      - Reading the app: app/guide.md
+      - Worked examples: app/examples.md
+  - How it was built:
+      - method/index.md
+      - 1. Data exploration: method/data.md
+      - 2. Baseline models: method/baseline.md
+      - 3. Explainability: method/explainability.md
+      - 4. Physics features and rules: method/physics.md
+      - 5. From predictions to decisions: method/decisions.md
+      - 6. Engineering: method/engineering.md
+  - Results and limitations: results.md
+  - Run it yourself: reproduce.md
+  - API reference:
+      - reference/index.md
+      - pdm.data: reference/data.md
+      - pdm.features: reference/features.md
+      - pdm.rules: reference/rules.md
+      - pdm.models: reference/models.md
+      - pdm.evaluate: reference/evaluate.md
+      - pdm.explain: reference/explain.md
+      - pdm.cost: reference/cost.md
+      - pdm.decision: reference/decision.md
+      - pdm.train: reference/train.md
+
+not_in_nav: |
+  includes/*.md
+
+exclude_docs: |
+  includes/

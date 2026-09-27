@@ -16,6 +16,7 @@ RANDOM_STATE = 0
 
 
 def make_cv(n_splits: int = N_SPLITS, random_state: int = RANDOM_STATE) -> StratifiedKFold:
+    """The shared cross-validation splitter: stratified, shuffled, with a fixed seed."""
     return StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
 
 
@@ -45,6 +46,7 @@ def best_f1_threshold(y_true, proba) -> tuple[float, float]:
 
 
 def classification_metrics(y_true, y_pred) -> dict[str, float]:
+    """Precision, recall, F1 and confusion counts for hard 0/1 predictions."""
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()
     precision = tp / (tp + fp) if tp + fp else 0.0
     recall = tp / (tp + fn) if tp + fn else 0.0

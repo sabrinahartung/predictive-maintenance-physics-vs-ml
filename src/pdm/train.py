@@ -88,6 +88,10 @@ def run(
     model_path: Path = MODEL_PATH,
     metrics_path: Path = METRICS_PATH,
 ) -> dict:
+    """Train the final model on all data, save it, and write the metrics file.
+
+    Returns the metrics that were written.
+    """
     df = load_data()
     X, y = df[FEATURES], df[TARGET]
 
@@ -112,6 +116,7 @@ def run(
 
 
 def main(argv: list[str] | None = None) -> None:
+    """Command-line entry point (``uv run pdm-train``)."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument(
         "--cost-ratio",

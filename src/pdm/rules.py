@@ -53,14 +53,17 @@ class PhysicsRuleClassifier(ClassifierMixin, BaseEstimator):
     """
 
     def fit(self, X, y=None):
+        """Record the classes; the rules have no parameters to learn."""
         self.classes_ = np.array([0, 1])
         return self
 
     def predict_proba(self, X):
+        """Probability 1 for rows where any rule fires, 0 otherwise."""
         p = rule_flags(X).any(axis=1).to_numpy(dtype=float)
         return np.column_stack([1 - p, p])
 
     def predict(self, X):
+        """1 if any rule fires, otherwise 0."""
         return (self.predict_proba(X)[:, 1] >= 0.5).astype(int)
 
 
@@ -80,6 +83,7 @@ class RulesThenModel(ClassifierMixin, BaseEstimator):
         self.residual_only = residual_only
 
     def fit(self, X, y):
+        """Fit a clone of ``model`` (only on rows without a rule if ``residual_only``)."""
         if self.residual_only:
             keep = ~rule_flags(X).any(axis=1).to_numpy()
             X, y = X[keep], np.asarray(y)[keep]
@@ -88,9 +92,11 @@ class RulesThenModel(ClassifierMixin, BaseEstimator):
         return self
 
     def predict_proba(self, X):
+        """Probability 1 where a rule fires, otherwise the model's probability."""
         p = self.model_.predict_proba(X)[:, 1]
         p = np.where(rule_flags(X).any(axis=1), 1.0, p)
         return np.column_stack([1 - p, p])
 
     def predict(self, X):
+        """Failure if the probability is at least 0.5."""
         return (self.predict_proba(X)[:, 1] >= 0.5).astype(int)

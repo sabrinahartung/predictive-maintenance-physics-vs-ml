@@ -36,7 +36,7 @@ FAILURE_MODES = {
     "rnf": "Random failure",
 }
 
-# Machine quality variants: L = low (50% of products), M = medium (30%), H = high (20%)
+# Machine quality variants: L = low (60% of rows), M = medium (30%), H = high (10%)
 MACHINE_TYPES = ["L", "M", "H"]
 
 

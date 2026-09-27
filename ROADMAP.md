@@ -153,11 +153,12 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M9 — Project documentation
 
-- [ ] Decide format: MkDocs Material site on GitHub Pages (default) vs. docs folder only
-- [ ] Pages: overview, methodology (evaluation protocol, SHAP, physics rules, cost model), results, decisions & limitations
-- [ ] API reference for `src/pdm` generated from docstrings (`mkdocstrings`)
-- [ ] How-to pages: reproduce results, train the model, run the app locally
-- [ ] Build docs in CI; link from README
+- [x] Decide format: MkDocs Material site on GitHub Pages
+- [x] Pages: overview, app reading guide + worked examples, methodology (evaluation protocol, SHAP, physics rules, cost model), results, decisions & limitations
+- [x] API reference for `src/pdm` generated from docstrings (`mkdocstrings`)
+- [x] How-to pages: reproduce results, train the model, run the app locally
+- [x] Build docs in CI (`mkdocs build --strict`), deploy workflow for GitHub Pages
+- [ ] Enable GitHub Pages (source: GitHub Actions) once the repo is public; link from README
 
 **Done when:** docs site is live and every public function in `src/pdm` has a docstring shown in the API reference.
 

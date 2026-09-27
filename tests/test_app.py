@@ -38,3 +38,11 @@ def test_worn_tool_preset_recommends_tool_change(app):
     app.selectbox(key="preset").set_value("Worn tool").run()
     assert not app.exception
     assert app.warning[0].value.startswith("**Change tool:**")
+
+
+def test_preset_from_query_param():
+    at = AppTest.from_file(APP, default_timeout=180)
+    at.query_params["preset"] = "Worn tool"
+    at.run()
+    assert not at.exception
+    assert at.warning[0].value.startswith("**Change tool:**")

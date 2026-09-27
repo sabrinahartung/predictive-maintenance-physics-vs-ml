@@ -79,7 +79,9 @@ def apply_preset():
 
 
 if "type" not in st.session_state:
-    st.session_state["preset"] = "Healthy process"
+    # A preset can be linked directly, e.g. ?preset=Overstrain
+    requested = st.query_params.get("preset", "Healthy process")
+    st.session_state["preset"] = requested if requested in PRESETS else "Healthy process"
     apply_preset()
 
 data, model, tool_change = load_model()

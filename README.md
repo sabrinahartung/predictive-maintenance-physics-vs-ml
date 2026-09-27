@@ -18,6 +18,12 @@ uv run jupyter lab   # explore the notebooks
 uv run streamlit run app/streamlit_app.py   # interactive demo
 ```
 
+## Documentation
+
+The full documentation, including a guide to reading the app, is at
+**https://sabrinahartung.github.io/predictive-maintenance-physics-vs-ml/**.
+Preview it locally with `uv run --group docs mkdocs serve`.
+
 ## Project structure
 
 ```
@@ -25,7 +31,8 @@ data/raw/        AI4I 2020 dataset
 notebooks/       Analysis notebooks (EDA → models → explainability → physics → cost)
 src/pdm/         Reusable Python package
 app/             Streamlit demo
-tests/           Unit tests
+tests/           Unit and app tests
+docs/            Documentation (MkDocs)
 reports/         Figures and metrics
 ```
 

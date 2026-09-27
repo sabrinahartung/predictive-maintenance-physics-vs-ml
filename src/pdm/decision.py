@@ -37,6 +37,18 @@ class Check:
 
 @dataclass
 class Assessment:
+    """Result of ``assess`` for one process.
+
+    Attributes:
+        probability: Calibrated failure probability from the hybrid model (1.0 if a rule fires).
+        risk_alarm: Whether ``probability`` is above the alarm level ``1 / cost_ratio``.
+        action: Recommended action, one of the ``ACTION_*`` constants.
+        checks: The three physics checks with values and limits.
+        tool_change_at: Cost-optimal tool age in minutes (None if a tool change never pays off).
+        tool_change_due: Whether the tool has reached ``tool_change_at``.
+        physics: Derived physics features (temperature difference, power, strain).
+    """
+
     probability: float
     risk_alarm: bool
     action: str
