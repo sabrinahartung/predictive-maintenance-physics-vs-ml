@@ -1,5 +1,7 @@
 # Physics vs. Black Box: Predictive Maintenance on AI4I 2020
 
+[![CI](https://github.com/sabrinahartung/predictive-maintenance-physics-vs-ml/actions/workflows/ci.yml/badge.svg)](https://github.com/sabrinahartung/predictive-maintenance-physics-vs-ml/actions/workflows/ci.yml)
+
 > Work in progress. See [ROADMAP.md](ROADMAP.md) for the plan.
 
 Can a machine learning model predict milling machine failures better than a few lines of physics?
@@ -10,7 +12,9 @@ simple rules, then turns the result into a cost-aware maintenance decision and a
 
 ```bash
 uv sync
-uv run jupyter lab
+uv run pdm-train     # train the final model, write reports/metrics.json
+uv run pytest        # run the tests
+uv run jupyter lab   # explore the notebooks
 ```
 
 ## Project structure

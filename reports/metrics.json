@@ -1,0 +1,59 @@
+{
+  "data": {
+    "rows": 10000,
+    "failures": 339
+  },
+  "cost_ratio": 10.0,
+  "alarm_threshold": 0.1,
+  "tool_change_at_min": 225.0,
+  "versions": {
+    "pdm": "0.1.0",
+    "scikit-learn": "1.9.1",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3"
+  },
+  "cross_validation": {
+    "hybrid": {
+      "pr_auc": 0.913382,
+      "roc_auc": 0.9807,
+      "brier": 0.005036,
+      "log_loss": 0.02658,
+      "at_threshold_1_over_r": {
+        "precision": 0.915094,
+        "recall": 0.858407,
+        "f1": 0.885845,
+        "tp": 291,
+        "fp": 27,
+        "fn": 48,
+        "tn": 9634
+      }
+    },
+    "policies": {
+      "rules_only": {
+        "alarms": 287,
+        "tp": 287,
+        "fp": 0,
+        "fn": 52,
+        "cost": 807.0,
+        "savings_vs_no_maintenance": 0.761947
+      },
+      "hybrid_calibrated": {
+        "alarms": 318,
+        "tp": 291,
+        "fp": 27,
+        "fn": 48,
+        "cost": 798.0,
+        "savings_vs_no_maintenance": 0.764602
+      },
+      "rules_plus_tool_change": {
+        "alarms": 353,
+        "tp": 298,
+        "fp": 55,
+        "fn": 41,
+        "cost": 763.0,
+        "savings_vs_no_maintenance": 0.774926
+      }
+    },
+    "no_maintenance_cost": 3390.0
+  }
+}

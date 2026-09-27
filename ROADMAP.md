@@ -119,10 +119,10 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M6 — Training pipeline, tests, CI
 
-- [ ] `pdm/train.py` CLI (`uv run pdm-train`): trains final model, writes `models/model.joblib` + `reports/metrics.json`
-- [ ] Tests: feature formulas, rules reproduce HDF/PWF/OSF labels, pipeline predicts correct shape, threshold helper edge cases
-- [ ] `ruff check` + `ruff format` clean
-- [ ] GitHub Actions: `uv sync` → `ruff check` → `pytest` on push/PR
+- [x] `pdm/train.py` CLI (`uv run pdm-train`): trains final model, writes `models/model.joblib` + `reports/metrics.json`
+- [x] Tests: feature formulas, rules reproduce HDF/PWF/OSF labels, pipeline predicts correct shape, threshold helper edge cases
+- [x] `ruff check` + `ruff format` clean
+- [x] GitHub Actions: `uv sync` → `ruff check` → `pytest` on push/PR
 
 **Done when:** CI badge is green.
 

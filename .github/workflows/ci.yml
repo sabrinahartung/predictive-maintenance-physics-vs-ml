@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check .
+      - name: Check formatting
+        run: uv run ruff format --check .
+      - name: Run tests
+        run: uv run pytest -q
+
+  notebooks:
+    name: Execute notebooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --locked
+      - name: Execute all notebooks
+        run: |
+          for nb in notebooks/0*.ipynb; do
+            echo "::group::$nb"
+            uv run jupyter nbconvert --execute --to notebook --output-dir "$RUNNER_TEMP" "$nb"
+            echo "::endgroup::"
+          done
