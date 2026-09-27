@@ -119,10 +119,35 @@ fired = [c.name for c in result.checks if c.fired]
 
 # --- Header and recommendation --------------------------------------------------------------
 st.title("Predictive maintenance: physics vs. black box")
+
+with st.container(border=True):
+    col_question, col_answer = st.columns([2, 3], gap="large")
+    with col_question:
+        st.markdown("#### The question")
+        st.markdown(
+            "A milling machine reports its temperatures, speed, torque and how long the "
+            "current tool has been in use.\n\n"
+            "**Can we tell from these readings whether a job is about to end in a breakdown, "
+            "and what is the cheapest thing to do about it? Do we even need AI for that?**"
+        )
+    with col_answer:
+        st.markdown("#### What the project found")
+        st.markdown(
+            "- **Most breakdowns follow simple physics.** 85% happen when one of three limits "
+            "is crossed: too little or too much power, too much load on a worn tool, or heat "
+            "that cannot escape. Checking these three limits catches every one of these "
+            "breakdowns without a single false alarm, and needs no AI.\n"
+            "- **Worn tools fail at random.** No sensor can tell *when* an old tool will break, "
+            "so the cheapest answer is to replace it before it gets too old.\n"
+            "- **AI covers the rest.** A calibrated model gives a failure risk for everything "
+            "the physics does not explain.\n\n"
+            "Together, this saves about **77% of maintenance costs** compared with running "
+            "machines until they break (with the default cost setting on the left)."
+        )
 st.caption(
-    "Milling machine data from the AI4I 2020 dataset. Three physics rules explain 85% of all "
-    "failures with 100% precision. A calibrated ML model scores the rest. "
-    f"[Code and analysis on GitHub]({REPO_URL})"
+    "**How to use this page:** pick an example or move the sliders on the left. The coloured "
+    "box below tells you what to do, and the tabs further down explain why. "
+    f"Data: AI4I 2020 milling machine dataset. [Code and analysis on GitHub]({REPO_URL})"
 )
 
 if result.action == ACTION_STOP:

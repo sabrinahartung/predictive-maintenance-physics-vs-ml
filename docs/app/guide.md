@@ -5,7 +5,9 @@ and how to interpret the recommendation.
 
 ![The app with the default "Healthy process" example](../assets/app/healthy.png)
 
-The screen has five areas:
+Below the headline, a short box states **the question behind the project** and **what it found**,
+in plain language. It is the one-minute summary of everything on this site. The rest of the screen
+has five areas:
 
 | # | Area | What it tells you |
 |---|---|---|
