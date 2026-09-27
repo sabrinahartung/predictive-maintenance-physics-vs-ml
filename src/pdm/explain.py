@@ -54,6 +54,27 @@ def explain(pipeline: Pipeline, X: pd.DataFrame) -> shap.Explanation:
         values=values,
         base_values=np.broadcast_to(np.ravel(raw.base_values)[0], len(X)).copy(),
         data=data,
-        display_data=X.to_numpy(dtype=object),
+        # Rounded for display in plots; ``data`` keeps full precision
+        display_data=X.round(1).to_numpy(dtype=object),
         feature_names=list(X.columns),
+    )
+
+
+def explain_hybrid(hybrid, X: pd.DataFrame) -> shap.Explanation:
+    """SHAP values for the ML part of a fitted ``RulesThenModel``.
+
+    If the ML part is a ``CalibratedClassifierCV``, the values are averaged over its internal fold
+    models. They explain the boosting score in log-odds *before* calibration; calibration is a
+    monotone mapping, so the direction and ranking of the contributions stay the same.
+    """
+    model = hybrid.model_
+    if not hasattr(model, "calibrated_classifiers_"):
+        return explain(model, X)
+    parts = [explain(cc.estimator, X) for cc in model.calibrated_classifiers_]
+    return shap.Explanation(
+        values=np.mean([p.values for p in parts], axis=0),
+        base_values=np.mean([p.base_values for p in parts], axis=0),
+        data=parts[0].data,
+        display_data=parts[0].display_data,
+        feature_names=parts[0].feature_names,
     )

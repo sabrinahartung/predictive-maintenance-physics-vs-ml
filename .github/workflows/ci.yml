@@ -16,6 +16,8 @@ jobs:
           enable-cache: true
       - name: Install dependencies
         run: uv sync --locked
+      - name: Check requirements.txt matches uv.lock
+        run: uv export --no-dev --no-hashes --frozen --no-header | diff - requirements.txt
       - name: Lint
         run: uv run ruff check .
       - name: Check formatting

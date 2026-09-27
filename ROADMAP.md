@@ -128,16 +128,19 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M7 — Streamlit demo (`app/streamlit_app.py`)
 
-- [ ] Inputs: machine type, air/process temp, rpm, torque, tool wear (sliders with realistic ranges)
-- [ ] Cost ratio slider R (default 10): alarm if calibrated hybrid probability > 1/R
-- [ ] Outputs: failure probability (`hybrid_model()`), decision, triggered physics rule(s), derived values (power, strain, ΔT) vs. limits
-- [ ] Tool change recommendation from the M5 policy (tool wear vs. cost-optimal W for the chosen R)
-- [ ] SHAP waterfall for the current prediction
-- [ ] Presets: "healthy", "overstrain", "power failure", "heat dissipation", "worn tool"
-- [ ] Train on startup with `st.cache_resource` (dataset is small, avoids pickle version issues)
-- [ ] Deploy to Streamlit Community Cloud; add link + screenshot/GIF to README
+- [x] Inputs: machine type, air/process temp, rpm, torque, tool wear (sliders with realistic ranges)
+- [x] Cost ratio slider R (default 10): alarm if calibrated hybrid probability > 1/R
+- [x] Outputs: failure probability (`hybrid_model()`), decision, triggered physics rule(s), derived values (power, strain, ΔT) vs. limits
+- [x] Tool change recommendation from the M5 policy (tool wear vs. cost-optimal W for the chosen R)
+- [x] SHAP waterfall for the current prediction
+- [x] Presets: "healthy", "overstrain", "power failure", "heat dissipation", "worn tool"
+- [x] Train on startup with `st.cache_resource` (dataset is small, avoids pickle version issues)
+- [ ] Deploy to Streamlit Community Cloud; add link + screenshot/GIF to README (needs repo public + Streamlit account)
 
 **Done when:** public URL works and shows a correct explanation for each preset.
+
+> Local app done: `uv run streamlit run app/streamlit_app.py`. Headless smoke tests in `tests/test_app.py`;
+> `requirements.txt` (exported from `uv.lock`, checked in CI) for Streamlit Cloud. Startup trains the model (~20–30 s).
 
 ## M8 — README & polish
 

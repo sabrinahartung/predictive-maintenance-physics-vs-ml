@@ -2,9 +2,9 @@ import numpy as np
 import pytest
 
 from pdm.data import FEATURES, TARGET, load_data
-from pdm.explain import explain
+from pdm.explain import explain, explain_hybrid
 from pdm.features import PHYSICS_FEATURES
-from pdm.models import baseline_models
+from pdm.models import baseline_models, hybrid_model
 
 
 @pytest.fixture(scope="module")
@@ -46,3 +46,15 @@ def test_explain_includes_physics_features():
     np.testing.assert_allclose(
         exp.values.sum(axis=1) + exp.base_values, pipe.decision_function(X.head(20)), atol=1e-4
     )
+
+
+def test_explain_hybrid_averages_calibration_folds():
+    df = load_data().sample(3000, random_state=2)
+    X, y = df[FEATURES], df[TARGET]
+    hybrid = hybrid_model().fit(X, y)
+    sample = X.head(10)
+    exp = explain_hybrid(hybrid, sample)
+    folds = hybrid.model_.calibrated_classifiers_
+    mean_log_odds = np.mean([cc.estimator.decision_function(sample) for cc in folds], axis=0)
+    assert exp.feature_names == [*FEATURES, *PHYSICS_FEATURES]
+    np.testing.assert_allclose(exp.values.sum(axis=1) + exp.base_values, mean_log_odds, atol=1e-4)

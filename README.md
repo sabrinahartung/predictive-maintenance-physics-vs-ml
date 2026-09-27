@@ -15,6 +15,7 @@ uv sync
 uv run pdm-train     # train the final model, write reports/metrics.json
 uv run pytest        # run the tests
 uv run jupyter lab   # explore the notebooks
+uv run streamlit run app/streamlit_app.py   # interactive demo
 ```
 
 ## Project structure
