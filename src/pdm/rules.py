@@ -69,12 +69,20 @@ class RulesThenModel(ClassifierMixin, BaseEstimator):
 
     The rules cover the failure modes that are fully explained by physics, and the model
     handles everything else.
+
+    With ``residual_only=True`` the model is trained only on rows where no rule fires, which are
+    exactly the rows it will be asked about. Its probabilities (and any calibration inside it) then
+    describe that population instead of being dominated by the rule failures.
     """
 
-    def __init__(self, model):
+    def __init__(self, model, residual_only: bool = False):
         self.model = model
+        self.residual_only = residual_only
 
     def fit(self, X, y):
+        if self.residual_only:
+            keep = ~rule_flags(X).any(axis=1).to_numpy()
+            X, y = X[keep], np.asarray(y)[keep]
         self.model_ = clone(self.model).fit(X, y)
         self.classes_ = self.model_.classes_
         return self

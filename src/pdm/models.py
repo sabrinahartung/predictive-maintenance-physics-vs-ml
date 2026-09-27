@@ -1,6 +1,7 @@
 """Model pipelines: preprocessing + classifier."""
 
 from sklearn.base import ClassifierMixin
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -9,6 +10,7 @@ from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, StandardSc
 
 from pdm.data import CATEGORICAL_FEATURES, NUMERIC_FEATURES
 from pdm.features import PHYSICS_FEATURES, add_physics_features
+from pdm.rules import RulesThenModel
 
 RANDOM_STATE = 0
 
@@ -59,3 +61,16 @@ def baseline_models(
     return {
         name: make_pipeline(clf, numeric, categorical, physics) for name, clf in classifiers.items()
     }
+
+
+def hybrid_model(calibrated: bool = True) -> RulesThenModel:
+    """The final model: physics rules first, gradient boosting with physics features for the rest.
+
+    The boosting model is trained only on rows where no rule fires. With ``calibrated=True`` its
+    probabilities are isotonic-calibrated with internal 5-fold cross-validation, so they can be
+    read as failure probabilities (see notebook 05).
+    """
+    model = make_pipeline(HistGradientBoostingClassifier(random_state=RANDOM_STATE), physics=True)
+    if calibrated:
+        model = CalibratedClassifierCV(model, method="isotonic", cv=5)
+    return RulesThenModel(model, residual_only=True)

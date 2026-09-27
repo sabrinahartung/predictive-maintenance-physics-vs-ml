@@ -105,12 +105,17 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M5 — Cost-based threshold (`05_cost_threshold.ipynb`)
 
-- [ ] `cost.py`: expected cost per threshold from a cost matrix (missed failure vs. false alarm vs. inspection)
-- [ ] Choose default costs (e.g. missed failure = 10× false alarm), plot cost vs. threshold, pick optimum
-- [ ] Sensitivity: optimal threshold for cost ratios 2×–50×
-- [ ] Check probability calibration (reliability plot); calibrate if needed
+- [x] `cost.py`: expected cost per threshold from a cost matrix (missed failure vs. false alarm vs. inspection)
+- [x] Choose default costs (e.g. missed failure = 10× false alarm), plot cost vs. threshold, pick optimum
+- [x] Sensitivity: optimal threshold for cost ratios 2×–50×
+- [x] Check probability calibration (reliability plot); calibrate if needed
 
 **Done when:** a recommended threshold with a one-paragraph business justification.
+
+> Result: cheapest policy for R ≥ 10 is **physics rules + preventive tool change** (~225 min at R = 10, ~200 min at
+> R = 100): 77.5% savings vs. no predictive maintenance at R = 10, beats every ML policy (CV-selected thresholds).
+> Rules alone are optimal for R ≤ 7. Final hybrid = ML trained only on rows without a rule + isotonic calibration
+> (PR-AUC 0.913, well calibrated), so the app can alarm at p > 1/R without tuning.
 
 ## M6 — Training pipeline, tests, CI
 
@@ -124,9 +129,11 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 ## M7 — Streamlit demo (`app/streamlit_app.py`)
 
 - [ ] Inputs: machine type, air/process temp, rpm, torque, tool wear (sliders with realistic ranges)
-- [ ] Outputs: failure probability, decision at cost-optimal threshold, triggered physics rule(s), derived values (power, strain, ΔT) vs. limits
+- [ ] Cost ratio slider R (default 10): alarm if calibrated hybrid probability > 1/R
+- [ ] Outputs: failure probability (`hybrid_model()`), decision, triggered physics rule(s), derived values (power, strain, ΔT) vs. limits
+- [ ] Tool change recommendation from the M5 policy (tool wear vs. cost-optimal W for the chosen R)
 - [ ] SHAP waterfall for the current prediction
-- [ ] Presets: "healthy", "overstrain", "power failure", "heat dissipation"
+- [ ] Presets: "healthy", "overstrain", "power failure", "heat dissipation", "worn tool"
 - [ ] Train on startup with `st.cache_resource` (dataset is small, avoids pickle version issues)
 - [ ] Deploy to Streamlit Community Cloud; add link + screenshot/GIF to README
 

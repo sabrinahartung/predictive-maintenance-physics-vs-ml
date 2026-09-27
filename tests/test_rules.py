@@ -45,3 +45,11 @@ def test_hybrid_uses_model_when_no_rule_fires(df):
     fired = rule_flags(X).any(axis=1).to_numpy()
     assert (proba[fired] == 1).all()
     np.testing.assert_allclose(proba[~fired], y.mean())
+
+
+def test_hybrid_residual_only_trains_on_rows_without_rule(df):
+    X, y = df[FEATURES], df[TARGET]
+    fired = rule_flags(X).any(axis=1)
+    hybrid = RulesThenModel(DummyClassifier(strategy="prior"), residual_only=True).fit(X, y)
+    proba = hybrid.predict_proba(X)[:, 1]
+    np.testing.assert_allclose(proba[~fired.to_numpy()], y[~fired].mean())
