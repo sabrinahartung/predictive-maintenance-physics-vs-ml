@@ -3,6 +3,7 @@ import pytest
 
 from pdm.data import FEATURES, TARGET, load_data
 from pdm.explain import explain
+from pdm.features import PHYSICS_FEATURES
 from pdm.models import baseline_models
 
 
@@ -34,3 +35,14 @@ def test_data_is_in_raw_units(fitted):
     exp = explain(pipe, X.head(5))
     rpm = FEATURES.index("rpm")
     np.testing.assert_allclose(exp.data[:, rpm], X["rpm"].head(5))
+
+
+def test_explain_includes_physics_features():
+    df = load_data().sample(2000, random_state=1)
+    X, y = df[FEATURES], df[TARGET]
+    pipe = baseline_models(physics=True)["HistGradientBoosting"].fit(X, y)
+    exp = explain(pipe, X.head(20))
+    assert exp.feature_names == [*FEATURES, *PHYSICS_FEATURES]
+    np.testing.assert_allclose(
+        exp.values.sum(axis=1) + exp.base_values, pipe.decision_function(X.head(20)), atol=1e-4
+    )

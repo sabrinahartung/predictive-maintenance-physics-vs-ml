@@ -28,11 +28,17 @@ def explain(pipeline: Pipeline, X: pd.DataFrame) -> shap.Explanation:
     """SHAP values of a fitted ``pre`` + tree classifier pipeline for the rows in ``X``.
 
     Values are in log-odds of failure. Contributions of one-hot encoded columns are summed back
-    into their original column, so there is exactly one value per column of ``X``. ``data`` holds
-    the raw (unscaled) feature values; categorical columns are given as category codes, with the
-    labels in ``display_data``.
+    into their original column, so there is exactly one value per model input column: the columns
+    of ``X`` plus any features derived inside the pipeline, such as physics features.
+
+    ``data`` holds the raw (unscaled) feature values. Categorical columns are given as category
+    codes, with the labels in ``display_data``.
     """
     pre, clf = pipeline.named_steps["pre"], pipeline[-1]
+    # Apply steps before preprocessing (e.g. physics features), then keep the columns `pre` uses
+    pre_pos = list(pipeline.named_steps).index("pre")
+    X = pipeline[:pre_pos].transform(X) if pre_pos else X
+    X = X[list(pre.feature_names_in_)]
     raw = shap.TreeExplainer(clf)(pre.transform(X))
 
     groups = _output_columns(pre)

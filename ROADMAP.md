@@ -90,14 +90,18 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 ## M4 — Physics features & rules (`04_physics_features.ipynb`) ⭐ core of the story
 
-- [ ] `features.py`: `temp_diff_k`, `power_w = torque · rpm · 2π/60`, `strain = tool_wear · torque`
-- [ ] `rules.py`: `PhysicsRuleClassifier` (fit/predict/predict_proba) with HDF, PWF, OSF rules; returns triggered mode
-- [ ] Verify each rule reproduces its failure-mode label (100%)
-- [ ] Compare in one table: raw-feature ML · rules only · ML + physics features · rules + ML hybrid
-- [ ] Per-failure-mode recall: show TWF/RNF are (near) unpredictable → theoretical ceiling
-- [ ] Short section "What this means on real data" (synthetic dataset caveat, why domain knowledge still matters)
+- [x] `features.py`: `temp_diff_k`, `power_w = torque · rpm · 2π/60`, `strain = tool_wear · torque`
+- [x] `rules.py`: `PhysicsRuleClassifier` (fit/predict/predict_proba) with HDF, PWF, OSF rules; returns triggered mode
+- [x] Verify each rule reproduces its failure-mode label (100%)
+- [x] Compare in one table: raw-feature ML · rules only · ML + physics features · rules + ML hybrid
+- [x] Per-failure-mode recall: show TWF/RNF are (near) unpredictable → theoretical ceiling
+- [x] Short section "What this means on real data" (synthetic dataset caveat, why domain knowledge still matters)
 
 **Done when:** comparison table shows rules ≈ F1 0.92 and ML + physics features ≥ rules; ceiling is quantified.
+
+> Result: rules F1 0.917 (precision 1.0, recall 0.847); hybrid rules + HGB best PR-AUC 0.906 with the same F1.
+> ML + physics features did **not** reach the rules on F1 (RF 0.877, HGB 0.851: histogram binning can't place
+> the power limits). Ceiling = rules: 15% of failures carry no signal. 27 HDF labels are floating-point artefacts.
 
 ## M5 — Cost-based threshold (`05_cost_threshold.ipynb`)
 
@@ -137,7 +141,17 @@ Each milestone ends with a commit (or PR) and a clear **Done when** check.
 
 **Done when:** someone can understand the result in 60 seconds from the README alone.
 
-## M9 — Optional extension: NASA C-MAPSS (remaining useful life)
+## M9 — Project documentation
+
+- [ ] Decide format: MkDocs Material site on GitHub Pages (default) vs. docs folder only
+- [ ] Pages: overview, methodology (evaluation protocol, SHAP, physics rules, cost model), results, decisions & limitations
+- [ ] API reference for `src/pdm` generated from docstrings (`mkdocstrings`)
+- [ ] How-to pages: reproduce results, train the model, run the app locally
+- [ ] Build docs in CI; link from README
+
+**Done when:** docs site is live and every public function in `src/pdm` has a docstring shown in the API reference.
+
+## M10 — Optional extension: NASA C-MAPSS (remaining useful life)
 
 - [ ] Separate notebook or repo: RUL regression on turbofan time series (FD001)
 - [ ] Windowed features, piecewise-linear RUL target, RMSE + NASA score
